@@ -1,0 +1,12 @@
+<div class="container mt-3">
+    <hr>
+    <h1>Componente Delivery Point</h1>
+    <ul>
+        @for (order of readyOrders; track $index) {
+            <li>
+                {{ order.number }} - {{ order.description }}
+                <button class="btn btn-success" (click)="deliverOrder(order)">Entregar!</button>
+            </li>
+        }
+    </ul>
+</div>

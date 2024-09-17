@@ -1,0 +1,23 @@
+<div class="container mt-3">
+    <hr>
+    <h1>Componente Cocina</h1>
+    <h3>Pendiente de cocinar</h3>
+    <ul class="border border-dark p-3">
+        @for (order of orders; track $index) {
+            <li>
+                {{ order.number }} - {{ order.description }}
+                <button class="btn btn-secondary" (click)="cookOrder(order)">Cocinar</button>
+            </li>
+        }
+    </ul>
+
+    <h3>Pedidos en Coccion</h3>
+    <ul class="border border-dark p-3">
+        @for (order of orders; track $index) {
+            <li>
+                {{ order.number }} - {{ order.description }}
+                <button class="btn btn-info" (click)="completeOrder(order)">Pedido Terminado!</button>
+            </li>
+        }
+    </ul>
+</div>
