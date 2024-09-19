@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Order } from '../order';
 import { OrderService } from '../order.service';
 import { FormsModule } from '@angular/forms';
@@ -14,11 +14,10 @@ export class DeliveryPointComponent {
 
   readyOrders: Order[] = []; // lista de pedidos terminados
 
-  constructor(private orderService: OrderService){
+  private orderService = inject(OrderService);
 
-    // nos suscribimos a los observables para recibir actualizaciones
-    this.orderService.readyOrders$.subscribe(r => this.readyOrders = r);
-
+  constructor(){
+    this.readyOrders = this.orderService.readyOrders;
   }
 
   // elimina el pedido de la lista de listos

@@ -14,13 +14,12 @@ export class KitchenComponent {
   orders: Order[] = []; // lsita de pedidos pendientes
   cookingOrders: Order[] = []; // lista de pedidos cocinandose
 
+  // injectamos el servicio
+  private orderService = inject(OrderService)
 
-  constructor(private orderService: OrderService){
-
-    // nos suscribimos a los observables para recibir actualizaciones
-    this.orderService.orders$.subscribe(o => this.orders = o);
-    this.orderService.cookingOrders$.subscribe(co => this.cookingOrders = co);
-
+  constructor(){
+    this.orders = this.orderService.orders;
+    this.cookingOrders = this.orderService.cookingOrders;
   }
 
   // mueve un pedido a la lista de coccion
@@ -37,7 +36,4 @@ export class KitchenComponent {
   completeOrder(order: Order){
     this.orderService.moveToReady(order);
   }
-
-
-
 }

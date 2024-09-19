@@ -1,14 +1,14 @@
 export class Order {
     
+    number: number;
     name: string;
     description: string;
-    number: number;
     date: Date;
 
     constructor(name: string, descripcion: string){
+        this.number = Math.floor(Math.random() * 1000) + 1;
         this.name = name;
         this.description = descripcion;
-        this.number = Math.floor(Math.random() * 1000) + 1;
         this.date = new Date();
     }
 

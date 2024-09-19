@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5 p-5 border border-black">
     <h1>Componente Point of Sell - POS</h1>
     <form (ngSubmit)="addOrder()">
         <div class="row">
@@ -8,7 +8,7 @@
             </div>
             <div class="col-9 mb-3">
                 <label for="description" class="form-label">Pedido:</label>
-                <input type="text" class="form-control" id="description" name="description">
+                <input [(ngModel)]="description" type="text" class="form-control" id="description" name="description">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Ordenar</button>

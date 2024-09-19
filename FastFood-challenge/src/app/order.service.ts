@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Order } from './order';
 
 @Injectable({
@@ -7,37 +6,40 @@ import { Order } from './order';
 })
 export class OrderService {
 
-  // BehaviorSubjects para mantener los diferentes estados de los pedidos
-  private orders = new BehaviorSubject<Order[]>([]); // pedidos pendientes
-  private cookingOrders = new BehaviorSubject<Order[]>([]); // pedidos de cocina
-  private readyOrders = new BehaviorSubject<Order[]>([]); // pedidos listos para entregar
+  orders: Order[] = []; // lista de pedidos pendientes
+  cookingOrders: Order[] = []; // lista de pedidos de cocina
+  readyOrders: Order[] = []; // lista de pedidos listos para entregar
 
-
-  // Observable para exponer los pedidos a otros componentes
-  orders$ = this.orders.asObservable();
-  cookingOrders$ = this.cookingOrders.asObservable();
-  readyOrders$ = this.readyOrders.asObservable();
 
   // Agrega un nuevo pedido a la lista de pedidos pendientes
   addOrder(order: Order){
-    this.orders.next([...this.orders.getValue(), order]);
+    this.orders.push(order);
   }
 
   // Mueve un pedido de la lista de pendientes a la lista de cocción
   moveToCooking(order: Order){
-    this.orders.next(this.orders.getValue().filter(o => o !== order));
-    this.cookingOrders.next([...this.cookingOrders.getValue(), order]);
+    this.removeFromList(this.orders, order);
+    this.cookingOrders.push(order);
   }
+  
 
   // Mueve un pedido de la lista de cocción a la lista de listos para entregar
   moveToReady(order: Order){
-    this.cookingOrders.next(this.cookingOrders.getValue().filter(o => o !== order));
-    this.readyOrders.next([...this.readyOrders.getValue(), order]);
+    this.removeFromList(this.cookingOrders, order);
+    this.readyOrders.push(order);
   }
 
   // Elimina un pedido de la lista de listos para entregar (después de entregarlo)
   deliverOrder(order: Order){
-    this.readyOrders.next(this.readyOrders.getValue().filter(o => o !== order));
+    this.removeFromList(this.readyOrders, order);
+  }
+
+  // elimina un pedido de la lista
+  removeFromList(list: Order[], order: Order) {
+    const index = list.indexOf(order);
+    if(index > -1) {
+      list.splice(index, 1)
+    }
   }
 
 }

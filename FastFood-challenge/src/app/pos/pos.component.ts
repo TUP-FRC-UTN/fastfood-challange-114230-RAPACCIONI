@@ -16,8 +16,13 @@ export class POSComponent {
   name: string = '';
   description: string = '';
 
-  // injectamos el servicio
-   constructor(private orderService: OrderService) {}
+  // injectamos el servicio 
+  private orderService = inject(OrderService);
+
+  constructor(){
+    this.name = this.name;
+    this.description = this.description;
+  }
 
   addOrder() {
 
